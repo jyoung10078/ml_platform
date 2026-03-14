@@ -1,80 +1,30 @@
-import React, { useState } from 'react';
-import { 
-  FileText, 
-  Download, 
-  Search, 
-  Filter, 
-  Eye, 
-  Calendar,
-  BarChart,
+import React, { useEffect, useState } from 'react';
+import {
+  FileText,
+  Download,
+  Search,
+  Filter,
+  Eye,
   CheckCircle,
   AlertCircle,
-  Clock
+  Clock,
+  Loader2,
 } from 'lucide-react';
 import { PredictionFile } from '../types';
+import { getPredictionFiles } from '../services/sagemakerService';
 
 const PredictionResults: React.FC = () => {
+  const [predictionFiles, setPredictionFiles] = useState<PredictionFile[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [selectedFile, setSelectedFile] = useState<PredictionFile | null>(null);
 
-  const predictionFiles: PredictionFile[] = [
-    {
-      id: '1',
-      filename: 'customer_churn_predictions_2024-01-15.csv',
-      size: 2.4,
-      recordCount: 15420,
-      uploadDate: new Date('2024-01-15T14:30:00'),
-      modelId: 'customer-churn',
-      modelName: 'Customer Churn Prediction',
-      accuracy: 0.942,
-      status: 'completed'
-    },
-    {
-      id: '2',
-      filename: 'sales_forecast_Q1_2024.csv',
-      size: 1.8,
-      recordCount: 8760,
-      uploadDate: new Date('2024-01-15T13:15:00'),
-      modelId: 'sales-forecast',
-      modelName: 'Sales Forecasting',
-      accuracy: 0.887,
-      status: 'completed'
-    },
-    {
-      id: '3',
-      filename: 'fraud_detection_batch_001.csv',
-      size: 5.2,
-      recordCount: 25000,
-      uploadDate: new Date('2024-01-15T12:00:00'),
-      modelId: 'fraud-detection',
-      modelName: 'Fraud Detection',
-      accuracy: 0.965,
-      status: 'processing'
-    },
-    {
-      id: '4',
-      filename: 'customer_segments_analysis.csv',
-      size: 3.1,
-      recordCount: 12000,
-      uploadDate: new Date('2024-01-14T16:45:00'),
-      modelId: 'customer-churn',
-      modelName: 'Customer Churn Prediction',
-      accuracy: 0.938,
-      status: 'completed'
-    },
-    {
-      id: '5',
-      filename: 'monthly_sales_predictions.csv',
-      size: 0.9,
-      recordCount: 3000,
-      uploadDate: new Date('2024-01-14T11:30:00'),
-      modelId: 'sales-forecast',
-      modelName: 'Sales Forecasting',
-      accuracy: 0.883,
-      status: 'failed'
-    }
-  ];
+  useEffect(() => {
+    getPredictionFiles()
+      .then(setPredictionFiles)
+      .finally(() => setLoading(false));
+  }, []);
 
   const filteredFiles = predictionFiles.filter(file => {
     const matchesSearch = file.filename.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -111,6 +61,17 @@ const PredictionResults: React.FC = () => {
   const formatNumber = (num: number) => {
     return num.toLocaleString();
   };
+
+  if (loading) {
+    return (
+      <div className="p-6 flex items-center justify-center h-64">
+        <div className="flex items-center space-x-3 text-gray-500 dark:text-gray-400">
+          <Loader2 className="w-6 h-6 animate-spin" />
+          <span>Loading prediction files…</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 space-y-6">

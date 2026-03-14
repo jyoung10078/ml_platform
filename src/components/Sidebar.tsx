@@ -6,10 +6,11 @@ import {
   FileText,
   ChevronRight,
   Sun,
-  Moon
+  Moon,
 } from 'lucide-react';
 import { ViewType } from '../types';
 import { useTheme } from '../contexts/ThemeContext';
+import { isAwsConfigured } from '../services/sagemakerService';
 
 interface SidebarProps {
   currentView: ViewType;
@@ -96,10 +97,12 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange }) => {
       <div className="p-4 border-t border-gray-200 dark:border-gray-700">
         <div className="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg">
           <div className="flex items-center space-x-2 mb-2">
-            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+            <div className={`w-2 h-2 rounded-full ${isAwsConfigured() ? 'bg-green-500' : 'bg-amber-400'}`}></div>
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">System Status</span>
           </div>
-          <p className="text-xs text-gray-600 dark:text-gray-400">AWS Services Online</p>
+          <p className="text-xs text-gray-600 dark:text-gray-400">
+            {isAwsConfigured() ? 'AWS Connected' : 'Demo Mode (no credentials)'}
+          </p>
         </div>
       </div>
     </div>
