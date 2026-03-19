@@ -9,6 +9,7 @@ import {
   AlertCircle,
   Clock,
   Loader2,
+  BarChart,
 } from 'lucide-react';
 import { PredictionFile } from '../types';
 import { getPredictionFiles } from '../services/sagemakerService';
