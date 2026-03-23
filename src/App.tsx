@@ -8,6 +8,7 @@ import { ViewType } from './types';
 
 function App() {
   const [currentView, setCurrentView] = useState<ViewType>('dashboard');
+  const [sidebarExpanded, setSidebarExpanded] = useState(false);
 
   const renderCurrentView = () => {
     switch (currentView) {
@@ -25,9 +26,14 @@ function App() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
-      <Sidebar currentView={currentView} onViewChange={setCurrentView} />
-      <main className="flex-1 overflow-y-auto">
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden">
+      <Sidebar
+        currentView={currentView}
+        onViewChange={setCurrentView}
+        expanded={sidebarExpanded}
+        onToggleExpand={() => setSidebarExpanded((prev) => !prev)}
+      />
+      <main className="flex-1 overflow-y-auto min-w-0">
         {renderCurrentView()}
       </main>
     </div>
