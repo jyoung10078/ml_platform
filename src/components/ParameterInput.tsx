@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { 
-  Save, 
-  Play, 
-  Settings, 
-  HelpCircle, 
-  CheckCircle, 
+import {
+  Save,
+  Play,
+  Settings,
+  HelpCircle,
+  CheckCircle,
   AlertCircle,
-  Upload 
+  Upload,
 } from 'lucide-react';
 import { ModelParameter } from '../types';
+import { submitTrainingJob } from '../services/sagemakerService';
 
 const ParameterInput: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -114,12 +115,8 @@ const ParameterInput: React.FC = () => {
     setSubmitStatus('idle');
 
     try {
-      // Simulate API call to AWS
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Here you would send the parameters to your AWS system
-      console.log('Submitting parameters:', parameters);
-      
+      const { jobName } = await submitTrainingJob(parameters);
+      console.log('[B Magic] Training job submitted:', jobName);
       setSubmitStatus('success');
     } catch (error) {
       setSubmitStatus('error');
