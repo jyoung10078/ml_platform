@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   Save,
   Play,
-  Settings,
+  PlusSquare,
   HelpCircle,
   CheckCircle,
   AlertCircle,
@@ -192,9 +192,9 @@ const ParameterInput: React.FC = () => {
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <div className="flex items-center space-x-3 mb-6">
-        <Settings className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+        <PlusSquare className="w-8 h-8 text-blue-600 dark:text-blue-400" />
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Model Parameters</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Create New Model</h2>
           <p className="text-gray-600 dark:text-gray-400">Configure your predictive model settings</p>
         </div>
       </div>

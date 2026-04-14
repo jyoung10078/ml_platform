@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Home,
-  Settings,
+  PlusSquare,
   BarChart3,
   FileText,
   Sun,
@@ -29,7 +29,7 @@ const BciCrossLogo: React.FC<{ className?: string }> = ({ className = '' }) => (
 
 const menuItems = [
   { id: 'dashboard' as ViewType, label: 'Dashboard', icon: Home, description: 'Overview & Status' },
-  { id: 'parameters' as ViewType, label: 'Parameters', icon: Settings, description: 'Model Configuration' },
+  { id: 'parameters' as ViewType, label: 'New Model', icon: PlusSquare, description: 'Create a New Model' },
   { id: 'performance' as ViewType, label: 'Performance', icon: BarChart3, description: 'Model Metrics' },
   { id: 'predictions' as ViewType, label: 'Predictions', icon: FileText, description: 'Results & Files' },
 ];
